@@ -21,34 +21,33 @@ export const extendedBoardsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // gets all boards
     getBoards: builder.query({
-      query: () => "/boards",
+      query: () => "/dashboards",
       transformResponse: (responseData: IBoardData[]) => {
+        console.log(responseData);
         return boardsAdapter.setAll(boardQueryInitialState, responseData);
       },
       providesTags: (result) => {
-        return result
-          ? [...result.ids.map((id) => ({ type: "Board" as const, id }))]
-          : ["Board"];
+        return result ? [...result.ids.map((id) => ({ type: "Board" as const, id }))] : ["Board"];
       },
     }),
     // creates a single board
     createBoard: builder.mutation({
-      query: (body: IColumnPostBody) => ({
-        url: "/boards",
-        method: "POST",
-        body,
-      }),
+      query: (body: IColumnPostBody) => {
+        return {
+          url: "/dashboards/create",
+          method: "POST",
+          body: { ...body, user_id: "503db226-964a-4d48-8f6b-72910f081d4b" },
+        };
+      },
       invalidatesTags: ["Board"],
     }),
     // deletes a single board
     deleteBoard: builder.mutation({
       query: (boardId: string) => ({
-        url: `/boards/${boardId}`,
+        url: `/dashboards/${boardId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, boardId) => [
-        { type: "Board", id: boardId },
-      ],
+      invalidatesTags: (result, error, boardId) => [{ type: "Board", id: boardId }],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         //optimistic update for board deletion
         const deleteResult = dispatch(
@@ -67,7 +66,7 @@ export const extendedBoardsApi = apiSlice.injectEndpoints({
     // updates a single board
     updateBoard: builder.mutation({
       query: (board: IBoardData) => ({
-        url: "/boards",
+        url: "/dashboards",
         body: { board },
         method: "PUT",
       }),
@@ -75,13 +74,9 @@ export const extendedBoardsApi = apiSlice.injectEndpoints({
       async onQueryStarted(board, { dispatch, queryFulfilled }) {
         //optimistic update for single board update
         const updateResult = dispatch(
-          extendedBoardsApi.util.updateQueryData(
-            "getBoards",
-            undefined,
-            (draft) => {
-              boardsAdapter.updateOne(draft, { id: board.id, changes: board });
-            }
-          )
+          extendedBoardsApi.util.updateQueryData("getBoards", undefined, (draft) => {
+            boardsAdapter.updateOne(draft, { id: board.id, changes: board });
+          })
         );
 
         try {
@@ -94,7 +89,7 @@ export const extendedBoardsApi = apiSlice.injectEndpoints({
     //gets a single board
     getBoard: builder.query({
       query: (boardId: string) => ({
-        url: `/boards/${boardId}`,
+        url: `/dashboards/${boardId}`,
       }),
       providesTags: (result: IBoardData | undefined) => {
         return result ? [{ type: "Board", id: result.id }] : ["Board"];
@@ -103,28 +98,17 @@ export const extendedBoardsApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useGetBoardsQuery,
-  useCreateBoardMutation,
-  useDeleteBoardMutation,
-  useUpdateBoardMutation,
-} = extendedBoardsApi;
+export const { useGetBoardsQuery, useCreateBoardMutation, useDeleteBoardMutation, useUpdateBoardMutation } = extendedBoardsApi;
 
 // get the response for the getBoards query
-export const selectBoardsResult =
-  extendedBoardsApi.endpoints.getBoards.select(undefined);
+export const selectBoardsResult = extendedBoardsApi.endpoints.getBoards.select(undefined);
 
 // create a memoized selector for the boards query
-const selectAllBoardsResult = createSelector(
-  selectBoardsResult,
-  (boardResult) => boardResult.data
-);
+const selectAllBoardsResult = createSelector(selectBoardsResult, (boardResult) => boardResult.data);
 
 // use the boardsAdapter to access getSeletors, normalize the getBoards result
 export const {
   selectAll: selectAllBoards,
   selectById: selectBoardById,
   selectIds: selectBoardIds,
-} = boardsAdapter.getSelectors<RootState>(
-  (state) => selectAllBoardsResult(state) ?? boardQueryInitialState
-);
+} = boardsAdapter.getSelectors<RootState>((state) => selectAllBoardsResult(state) ?? boardQueryInitialState);

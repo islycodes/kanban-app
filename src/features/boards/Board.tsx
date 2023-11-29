@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 import { IBoardData } from "../../@types/types";
 import { useAppDispatch } from "../../redux/hooks";
 import PortalAwareItem from "../../components/PortalAwareItem";
@@ -15,16 +10,11 @@ import { classNames } from "../../utils/utils";
 import AddNewColumnBtn from "../columns/AddNewColumnBtn";
 import Column from "../columns/Column";
 import { useUpdateColumnsMutation } from "../columns/columnsEndpoints";
-import {
-  extendedBoardsApi,
-  useGetBoardsQuery,
-  useUpdateBoardMutation,
-} from "./boardsEndpoints";
+import { extendedBoardsApi, useGetBoardsQuery, useUpdateBoardMutation } from "./boardsEndpoints";
 import { boardSelected } from "./boardsSlice";
 
 export default function Board() {
-  const [updateBoard] = useUpdateBoardMutation();
-  const [pollInterval, setPollInterval] = useState(500);
+  const [pollInterval, setPollInterval] = useState(2000);
   const { data: boards } = useGetBoardsQuery(undefined, {
     pollingInterval: pollInterval,
   });
@@ -39,9 +29,7 @@ export default function Board() {
     const returningUser = localStorage.getItem("returningUser");
 
     if (!returningUser && boards) {
-      const sampleBoard = Object.values(boards.entities).find(
-        (board) => board?.name === "Platform Launch"
-      );
+      const sampleBoard = Object.values(boards.entities).find((board) => board?.name === "Platform Launch");
 
       if (sampleBoard) dispatch(boardSelected({ board: sampleBoard.id }));
       localStorage.setItem("returningUser", "true");
@@ -56,18 +44,6 @@ export default function Board() {
 
   const { moveTask } = useMoveTask();
 
-  const moveColumn = (result: DropResult): IBoardData | undefined => {
-    if (!selectedBoard || !columns) return;
-    const { source, destination, draggableId } = result;
-    if (!destination) return;
-    const colList = selectedBoard.columns.slice();
-
-    colList.splice(source.index, 1);
-    colList.splice(destination?.index, 0, draggableId);
-
-    return { ...selectedBoard, columns: colList };
-  };
-
   //handler for drag event, updates columns or tasks in the DB
   const onDragEnd = (result: DropResult) => {
     switch (result.type) {
@@ -75,10 +51,6 @@ export default function Board() {
         const columnUpdate = moveTask(result);
         if (columnUpdate) return updateColumns(columnUpdate);
         break;
-      case "COLUMN":
-        const boardUpdate = moveColumn(result);
-        if (boardUpdate) return updateBoard(boardUpdate);
-        return;
       default:
         throw new Error("Invalid result type in DropBody");
     }
@@ -86,52 +58,25 @@ export default function Board() {
   };
 
   return (
-    <main
-      data-testid="board_component"
-      className={classNames(
-        "flex overflow-hidden h-full",
-        "transform transition-all"
-      )}
-    >
+    <main data-testid="board_component" className={classNames("flex overflow-hidden h-full", "transform transition-all")}>
       <DragDropContext
         onDragEnd={(result) => {
           onDragEnd(result);
         }}
       >
         <section className="h-full overflow-x-scroll overflow-y-hidden">
-          <h1 className="sr-only">kanban board</h1>
+          <h1 className="sr-only">Team Hub</h1>
           {columns ? (
-            <Droppable
-              droppableId="columns-droppable"
-              key={"columns-droppable"}
-              type="COLUMN"
-              direction="horizontal"
-            >
+            <Droppable isDropDisabled={true} droppableId="columns-droppable" key={"columns-droppable"} type="COLUMN" direction="horizontal">
               {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={classNames(
-                    "grid grid-rows-1 grid-flow-col w-max h-full px-2"
-                  )}
-                >
+                <div ref={provided.innerRef} {...provided.droppableProps} className={classNames("grid grid-rows-1 grid-flow-col w-max h-full px-2")}>
                   {selectedBoard?.columns.map((id: string, index) => {
                     const column = columns.entities[id];
                     return column ? (
-                      <Draggable
-                        draggableId={column.id}
-                        key={"draggable-" + column.id}
-                        index={index}
-                      >
+                      <Draggable draggableId={column.id} key={"draggable-" + column.id} index={index}>
                         {(provided, snapshot) => (
-                          <PortalAwareItem
-                            provided={provided}
-                            snapshot={snapshot}
-                          >
-                            <Column
-                              key={`column-${column.id}`}
-                              column={column}
-                            />
+                          <PortalAwareItem provided={provided} snapshot={snapshot}>
+                            <Column key={`column-${column.id}`} column={column} />
                           </PortalAwareItem>
                         )}
                       </Draggable>
@@ -140,24 +85,14 @@ export default function Board() {
                     );
                   })}
                   {/** keeps droppable area the same size while column is dragging */}
-                  {snapshot.isUsingPlaceholder ? (
-                    <div className="w-72" />
-                  ) : (
-                    <></>
-                  )}
-                  <AddNewColumnBtn />
+                  {snapshot.isUsingPlaceholder ? <div className="w-72" /> : <></>}
                   {provided.placeholder}
                 </div>
               )}
             </Droppable>
           ) : (
             <div className="px-12 font-bold text-center">
-              <div className="py-6 text-gray-500">
-                This board is empty. Create a new column to get started.
-              </div>
-              <button className="bg-primary-indigo-active text-white px-3 py-3 m-auto rounded-full w-fit mb-24">
-                + Add New Column
-              </button>
+              <div className="py-6 text-gray-500">Aparentemente você não tem nenhum quadro no momento, crie um!</div>
             </div>
           )}
         </section>

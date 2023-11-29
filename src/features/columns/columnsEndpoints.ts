@@ -35,40 +35,32 @@ export const extendedColumnsApi = apiSlice.injectEndpoints({
       },
       async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
         const updateColumns = dispatch(
-          extendedColumnsApi.util.updateQueryData(
-            "getColumns",
-            arg.boardId,
-            (draft) => {
-              // draft is an immer copy of the state and can be mutated directly
-              // update the state with the columns adapter to update the normalized data
-              columnsAdapter.updateMany(draft, {
-                payload: arg.updates.map((col) => ({
-                  id: col.id,
-                  changes: col,
-                })),
-                type: "",
-              });
-            }
-          )
+          extendedColumnsApi.util.updateQueryData("getColumns", arg.boardId, (draft) => {
+            // draft is an immer copy of the state and can be mutated directly
+            // update the state with the columns adapter to update the normalized data
+            columnsAdapter.updateMany(draft, {
+              payload: arg.updates.map((col) => ({
+                id: col.id,
+                changes: col,
+              })),
+              type: "",
+            });
+          })
         );
 
         let updateBoard;
-        if (arg.newName) {
+        if (arg.name) {
           updateBoard = dispatch(
-            extendedBoardsApi.util.updateQueryData(
-              "getBoards",
-              arg,
-              (draft) => {
-                if (arg.newName)
-                  boardsAdapter.updateOne(draft, {
-                    id: arg.boardId,
-                    changes: {
-                      ...draft.entities[arg.boardId],
-                      name: arg.newName,
-                    },
-                  });
-              }
-            )
+            extendedBoardsApi.util.updateQueryData("getBoards", arg, (draft) => {
+              if (arg.name)
+                boardsAdapter.updateOne(draft, {
+                  id: arg.boardId,
+                  changes: {
+                    ...draft.entities[arg.boardId],
+                    name: arg.name,
+                  },
+                });
+            })
           );
         }
 
@@ -91,13 +83,9 @@ export const extendedColumnsApi = apiSlice.injectEndpoints({
       invalidatesTags: ["Column"],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         const deleteResult = dispatch(
-          extendedColumnsApi.util.updateQueryData(
-            "getColumns",
-            undefined,
-            (draft) => {
-              columnsAdapter.removeOne(draft, arg);
-            }
-          )
+          extendedColumnsApi.util.updateQueryData("getColumns", undefined, (draft) => {
+            columnsAdapter.removeOne(draft, arg);
+          })
         );
 
         try {
@@ -110,8 +98,4 @@ export const extendedColumnsApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useGetColumnsQuery,
-  useUpdateColumnsMutation,
-  useDeleteColumnMutation,
-} = extendedColumnsApi;
+export const { useGetColumnsQuery, useUpdateColumnsMutation, useDeleteColumnMutation } = extendedColumnsApi;

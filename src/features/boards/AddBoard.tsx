@@ -12,15 +12,11 @@ export default function AddBoard() {
   });
 
   return (
-    <ModalWBackdrop
-      render={render}
-      onOutsideClick={unRender}
-      testid="add_board_modal"
-    >
+    <ModalWBackdrop render={render} onOutsideClick={unRender} testid="add_board_modal">
       <BoardModifier
-        titles={["Add Board", "Name", "Columns", "Add New Board"]}
+        titles={["Adicionar dashboard", "Nome", "Adicionar"]}
         selectedBoard={{
-          name: "New Board",
+          name: "",
           id: "newBoard",
           columns: ["", ""],
         }}

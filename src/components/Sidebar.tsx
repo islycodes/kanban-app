@@ -13,23 +13,13 @@ import useSelectedBoard from "../hooks/useSelectedBoard";
  * Static Sidebar for desktop
  * @returns
  */
-export default function Sidebar({
-  sidebarOpen,
-  setSidebarOpen,
-}: {
-  sidebarOpen: boolean;
-  setSidebarOpen: Dispatch<SetStateAction<boolean>>;
-}) {
+export default function Sidebar({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean; setSidebarOpen: Dispatch<SetStateAction<boolean>> }) {
   const boards = useAppSelector(selectAllBoards);
   const board = useSelectedBoard();
 
   return (
     <div className="relative">
-      <div
-        className={`w-full transition-width ease-in-out ${
-          sidebarOpen ? "md:w-64" : "w-0"
-        }`}
-      />
+      <div className={`w-full transition-width ease-in-out ${sidebarOpen ? "md:w-64" : "w-0"}`} />
       <Transition
         as={"section"}
         id="sidebarMenu"
@@ -53,20 +43,14 @@ export default function Sidebar({
         >
           <div className="flex flex-shrink-0 items-center px-4 mb-8 dark:text-white">
             <MobileLogo />
-            <h1 className="font-bold text-2xl ml-2">kanban</h1>
+            <h1 className="font-bold text-2xl ml-2">TeamHub</h1>
           </div>
           <div className="mt-5 flex flex-1 flex-col justify-between">
             <div>
-              <h2 className="tracking-[.2em] mb-4 font-semibold text-xs text-gray-400 ml-6">
-                ALL BOARDS {`(${boards.length})`}
-              </h2>
+              <h2 className="tracking-[.2em] mb-4 font-semibold text-xs text-gray-400 ml-6">DASHBOARDS {`(${boards.length})`}</h2>
               <ul>
                 {boards.map((boardItem, i) => (
-                  <BoardMenuItem
-                    active={board?.id === boardItem.id}
-                    item={boardItem}
-                    key={"board-" + i}
-                  />
+                  <BoardMenuItem active={board?.id === boardItem.id} item={boardItem} key={"board-" + i} />
                 ))}
               </ul>
               <NewBoardBtn />
@@ -81,7 +65,7 @@ export default function Sidebar({
                 }}
                 className="flex px-4 text-sm text-gray-400"
               >
-                <EyeOff /> <span className="ml-2">Hide Sidebar</span>
+                <EyeOff /> <span className="ml-2">Ocultar Sidebar</span>
               </button>
             </div>
           </div>

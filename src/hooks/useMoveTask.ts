@@ -45,7 +45,7 @@ export default function useMoveTask() {
       additions: [],
       boardId: column.board,
       deletions: [],
-      newName: null,
+      name: null,
       updates,
     };
   };

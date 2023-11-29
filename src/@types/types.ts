@@ -99,7 +99,7 @@ export interface IColumnPostBody {
   updates: IColumn[];
   boardId: string;
   columnOrder?: string[];
-  newName: null | string;
+  name: null | string;
 }
 
 export type TxCallback = (transaction: IDBObjectStore) => any;
