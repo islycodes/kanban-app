@@ -1,14 +1,12 @@
 import React from "react";
-
-// TypeScript only
-interface TicketProps {
-  text: string;
-  index: number;
+import { TicketInterface } from "../interfaces";
+interface TicketComponentProps {
+  ticket: TicketInterface;
 }
-
-// ": React.FC<TicketProps>" is TypeScript only
-// src/components/Ticket.tsx
-
-export const Ticket: React.FC<TicketProps> = ({ text, index }) => {
-  return <div key={index}>{text}</div>;
+export const Ticket: React.FC<TicketComponentProps> = ({ ticket }) => {
+  return (
+    <div className="flex-col border rounded-md p-4 cursor-pointer">
+      <p className="text-lg font-semibold">{ticket.name}</p>
+    </div>
+  );
 };

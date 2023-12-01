@@ -1,8 +1,10 @@
+import { TicketStatusEnum } from "../enums";
+
 export interface TicketInterface {
   id: number;
   name: string;
-  description: string;
-  status: string;
+  description?: string;
+  status: TicketStatusEnum;
   dashboard_id: number;
 }
 export interface DashboardInterface {
