@@ -1,13 +1,13 @@
-export interface Ticket {
+export interface TicketInterface {
   id: number;
   name: string;
   description: string;
   status: string;
   dashboard_id: number;
 }
-export interface Dashboard {
+export interface DashboardInterface {
   id: number;
   name: string;
-  tickets: Ticket[];
+  tickets: TicketInterface[];
   user_id: string;
 }

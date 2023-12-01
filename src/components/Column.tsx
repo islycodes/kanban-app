@@ -1,32 +1,19 @@
 import React from "react";
-import Item from "./Item";
-import { Droppable } from "react-beautiful-dnd";
+import { Ticket } from "./Ticket";
+import { TicketInterface } from "../interfaces";
 
-// TypeScript only
 interface ColumnProps {
-  list: string[];
+  header: string;
+  tickets: TicketInterface[];
 }
 
-const Column: React.FC<ColumnProps> = ({ list }) => {
+export const Column: React.FC<ColumnProps> = ({ header, tickets }) => {
   return (
-    <Droppable droppableId="col-1">
-      {(provided) => (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-        >
-          {list.map((text, index) => (
-            <Item key={text} text={text} index={index} />
-          ))}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+    <div>
+      <div>{header}</div>
+      {tickets.map((ticket, index) => (
+        <div>{ticket.name}</div>
+      ))}
+    </div>
   );
 };
-
-export default Column;
