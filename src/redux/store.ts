@@ -1,23 +1,14 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import boardsSlice from "../features/boards/boardsSlice";
-import tasksSlice from "../features/tasks/tasksSlice";
-import { apiSlice } from "../features/api/apiSlice";
+import dashboardsSlice from "./slices/dashboards-data";
+import ticketsSlice from "./slices/tickets-data";
 
 export const store = configureStore({
   reducer: {
-    boards: boardsSlice,
-    tasks: tasksSlice,
-    [apiSlice.reducerPath]: apiSlice.reducer,
+    dashboards: dashboardsSlice,
+    tasks: ticketsSlice,
   },
-  middleware: (getDefaultMiddleWare) =>
-    getDefaultMiddleWare().concat(apiSlice.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
