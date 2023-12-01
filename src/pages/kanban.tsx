@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { Column } from "../components/column";
 import Header from "../components/header";
-import { TicketStatus, TicketStatusEnum } from "../enums";
 import { DashboardInterface, TicketInterface } from "../interfaces";
 import { ApiInstance } from "../services/api";
+import { TicketStatus } from "../enums";
+import { Column } from "../components/Column";
 
 export function Kanban() {
   const [tickets, setTickets] = useState<TicketInterface[]>([]);
   const [kanbans, setKanbans] = useState<DashboardInterface[]>([]);
-  const [selectedKanban, setSelectedKanban] = useState<DashboardInterface>();
+  const [selectedKanban] = useState<DashboardInterface>();
 
   const getAllTickets = async () => {
     if (selectedKanban) {
       const data = await ApiInstance.getAllTicketsFromKanban(
-        selectedKanban?.id
+        selectedKanban.id!
       );
       setTickets(data);
     }

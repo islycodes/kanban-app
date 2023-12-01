@@ -5,11 +5,11 @@ export interface TicketInterface {
   name: string;
   description?: string;
   status: TicketStatusEnum;
-  dashboard_id: number;
+  dashboard_id: string;
 }
 export interface DashboardInterface {
-  id: string;
+  id?: string;
   name: string;
-  tickets: TicketInterface[];
+  tickets?: TicketInterface[];
   user_id: string;
 }
