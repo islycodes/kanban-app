@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
+    "@types/babel__core": "^7.20.5",
+    "@types/babel__template": "^7.4.4",
     "@types/react-beautiful-dnd": "^13.1.7",
+    "@types/react-router-dom": "^5.3.3",
     "axios": "^1.5.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
