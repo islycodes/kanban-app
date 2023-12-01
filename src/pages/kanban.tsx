@@ -12,21 +12,20 @@ export function Kanban() {
 
   const getAllTickets = async () => {
     if (selectedKanban) {
-      const data = await ApiInstance.getAllTicketsFromKanban(
-        selectedKanban?.id
-      );
+      const data = await ApiInstance.getAllTicketsFromKanban(selectedKanban?.id);
       setTickets(data);
     }
   };
 
   const getAllKanbans = async () => {
-    const data = await ApiInstance.getAllKanbans();
-    console.log(data);
-    if (data.length === 0 && kanbans.length === 0) {
+    let data;
+    data = await ApiInstance.getAllKanbans();
+    if (data?.length === 0 || data === undefined) {
       await ApiInstance.createKanban("Meu Kanban");
-      const data = await ApiInstance.getAllKanbans();
-      setKanbans(data);
-    } else setKanbans(data);
+      data = await ApiInstance.getAllKanbans();
+    }
+    setKanbans(data);
+    setSelectedKanban(data[0]);
   };
 
   useEffect(() => {

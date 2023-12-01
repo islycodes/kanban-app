@@ -3,7 +3,7 @@ import { TicketInterface } from "../interfaces";
 
 class ApiServiceClass {
   Api = axios.create({
-    baseURL: "http://192.168.3.223:5000",
+    baseURL: "http://192.168.3.105:5000",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -16,20 +16,17 @@ class ApiServiceClass {
         username,
         password,
       });
-      console.log(data);
       localStorage.setItem("userId", data.user.id);
       localStorage.setItem("username", data.user.username);
     } catch (error) {
-      console.log();
+      console.log(error);
     }
   }
 
   async getAllTicket() {}
 
   async getAllTicketsFromKanban(kanbanId: string): Promise<TicketInterface[]> {
-    const { data } = await this.Api.get(
-      `/tickets/getTicketsByDashboard/${kanbanId}`
-    );
+    const { data } = await this.Api.get(`/tickets/getTicketsByDashboard/${kanbanId}`);
     return data;
   }
   async createKanban(name: string) {
@@ -40,15 +37,14 @@ class ApiServiceClass {
     });
     return data;
   }
+
   async getOneTicket(ticketId: string): Promise<TicketInterface> {
     return {} as TicketInterface;
   }
 
   async getAllKanbans() {
     const userId = localStorage.getItem("userId");
-    const { data } = await this.Api.get(
-      `/dashboards/getDashboardByUserId/${userId}`
-    );
+    const { data } = await this.Api.get(`/dashboards/getDashboardByUserId/${userId}`);
     return data;
   }
 
