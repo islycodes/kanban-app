@@ -22,7 +22,7 @@ export default function Header(props: { customSubtitle?: ReactElement }) {
 
   return (
     <>
-      <div className="flex flex-col text-[#A9A9A9]">
+      <div className="flex flex-col text-[#A9A9A9] select-none">
         <p className="text-2xl">Olá, {username}</p>
         {props.customSubtitle ?? (
           <div className="mt-4 font-semibold">

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { TicketInterface } from "../interfaces";
+import { TicketStatusEnum } from "@/enums";
 
 class ApiServiceClass {
   Api = axios.create({
@@ -22,8 +23,6 @@ class ApiServiceClass {
       console.log(error);
     }
   }
-
-  async getAllTicket() {}
 
   async getAllTicketsFromKanban(kanbanId: string): Promise<TicketInterface[]> {
     const { data } = await this.Api.get(
@@ -53,6 +52,10 @@ class ApiServiceClass {
     return data;
   }
 
-  async getOneKanban(kanbanId: string) {}
+  async updateTicketStatus(ticketId: string, status: TicketStatusEnum) {
+    await this.Api.put(`/tickets/changeStatus/${ticketId}`, {
+      status,
+    });
+  }
 }
 export const ApiInstance = new ApiServiceClass();

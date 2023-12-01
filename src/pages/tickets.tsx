@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import MarkerIcon from "@/assets/marker";
-import { TicketStatus, TicketStatusEnum } from "@/enums";
+import { TicketStatusEnum } from "@/enums";
 export default function Tasks() {
   const [params] = useSearchParams();
   const [ticket, setTicket] = useState<TicketInterface>();
@@ -28,7 +28,6 @@ export default function Tasks() {
     if (id !== null) {
       setEditMode(true);
       ApiInstance.getOneTicket(id).then((value) => {
-        console.log(value);
         setTicket(value);
         setName(value.name);
         setDescription(value?.description ?? "");
@@ -36,6 +35,11 @@ export default function Tasks() {
       });
     }
   }, []);
+
+  const handleStatusChange = async (status: TicketStatusEnum) => {
+    setStatus(status);
+    ticket && (await ApiInstance.updateTicketStatus(ticket?.id, status));
+  };
 
   return (
     <div className="w-full h-full bg-[#1D1E20]">
@@ -68,7 +72,10 @@ export default function Tasks() {
           <div className="mt-6 flex flex-row">
             <label className="text-[#A9A9A9] mr-2 mt-3">Status: </label>
             <div className="ml-8 mt-2">
-              <Select value={status as TicketStatusEnum}>
+              <Select
+                value={status as TicketStatusEnum}
+                onValueChange={handleStatusChange}
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
