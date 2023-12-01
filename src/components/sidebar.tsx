@@ -1,3 +1,4 @@
+import { useState } from "react";
 import AboutUsIcon from "../assets/about";
 import ArrowDownIcon from "../assets/arrow-down";
 import BacklogIcon from "../assets/backlog";
@@ -10,8 +11,11 @@ import SettingsIcon from "../assets/settings";
 import ReportsIcon from "../assets/sprint";
 import TeamHub from "../assets/teamhub";
 import TeamHubLogo from "../assets/teamhub-logo";
+import ArrowUpIcon from "../assets/arrow-up";
 
 export default function SideBar() {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="min-w-[300px] flex select-none">
       <div className="w-full flex flex-col justify-between bg-[#1D1E20] p-6 border-[#000000] border-r-[1px] ">
@@ -41,18 +45,33 @@ export default function SideBar() {
             </div>
           </div>
           <div className="mt-10 ml-3">
-            <div className="flex justify-between items-center cursor-pointer">
+            <div
+              onClick={() => setOpen(!open)}
+              className="flex justify-between items-center cursor-pointer"
+            >
               <p className="font-semibold text-[#FAB600]">MENU</p>
-              <ArrowDownIcon width={12} height={8} />
+              {open ? (
+                <ArrowUpIcon width={12} height={8} />
+              ) : (
+                <ArrowDownIcon width={12} height={8} />
+              )}
             </div>
-            <div className="flex mt-4 cursor-pointer items-center">
-              <ImportIcon width={24} height={24} />
-              <p className="ml-4 mt-1 text-[#A9A9A9] font-medium">Importar</p>
-            </div>
-            <div className="flex mt-4 cursor-pointer items-center">
-              <ExportIcon width={24} height={24} />
-              <p className="ml-4 mt-1 text-[#A9A9A9] font-medium">Exportar</p>
-            </div>
+            {open && (
+              <>
+                <div className="flex mt-4 cursor-pointer items-center">
+                  <ImportIcon width={24} height={24} />
+                  <p className="ml-4 mt-1 text-[#A9A9A9] font-medium">
+                    Importar
+                  </p>
+                </div>
+                <div className="flex mt-4 cursor-pointer items-center">
+                  <ExportIcon width={24} height={24} />
+                  <p className="ml-4 mt-1 text-[#A9A9A9] font-medium">
+                    Exportar
+                  </p>
+                </div>{" "}
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-col ml-3 pb-6">

@@ -19,7 +19,7 @@ export function Dashboard() {
       <div className="w-full bg-[#1D1E20] flex flex-row h-full">
         <div className="bg-[#1D1E20] flex flex-row justify-evenly w-full h-full">
           {headers.map((header) => (
-            <Column header={header} tickets={[]} />
+            <Column header={header} tickets={mockTickets} />
           ))}
         </div>
       </div>
