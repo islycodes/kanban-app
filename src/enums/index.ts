@@ -7,14 +7,17 @@ export enum TicketStatusEnum {
 export const TicketStatus = [
   {
     value: TicketStatusEnum.TODO,
-    label: "A fazer",
+    label: "Não iniciado",
+    color: "#EC9CB9",
   },
   {
     value: TicketStatusEnum.DOING,
-    label: "Fazendo",
+    label: "Em andamento",
+    color: "#5B97BD",
   },
   {
     value: TicketStatusEnum.DONE,
-    label: "Feito",
+    label: "Concluído",
+    color: "#6C9B7D",
   },
 ];

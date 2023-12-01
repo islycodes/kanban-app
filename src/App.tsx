@@ -8,6 +8,7 @@ import { Kanban } from "./pages/kanban";
 import SideBar from "./components/sidebar";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import Tasks from "./pages/tickets";
 
 const RedirectToKanban: React.FC = () => {
   window.location.href = "/quadro";
@@ -31,6 +32,7 @@ export const App = () => {
         <Route path={`/sobre`} element={<AboutUs />} />
         <Route path={`/login`} element={<Login />} />
         <Route path={`/cadastro`} element={<Register />} />
+        <Route path={`/tarefa`} element={<Tasks />} />
       </Routes>
     </div>
   );

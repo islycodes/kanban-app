@@ -5,8 +5,8 @@ interface TicketComponentProps {
 }
 export const Ticket: React.FC<TicketComponentProps> = ({ ticket }) => {
   return (
-    <div className="flex-col border rounded-md p-4 cursor-pointer">
-      <p className="text-lg font-semibold">{ticket.name}</p>
+    <div className="flex-col rounded-md p-4 cursor-pointer bg-[#232527]">
+      <p className="text-sm font-semibold">{ticket.name}</p>
     </div>
   );
 };

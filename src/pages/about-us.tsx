@@ -9,11 +9,12 @@ export default function AboutUs() {
         <div className="text-justify">
           <p className="mb-2">
             O tema escolhido é direcionado para ajudar os usuários a organizar e
-            gerenciar suas atividades diárias de forma eficiente.
+            gerenciar suas atividades diárias de forma eficiente, abordando
+            desafios comuns como:
           </p>
           <p className="mb-2">
             <span className="text-[#FAB600] font-semibold">
-              · Organizar Tarefas:{" "}
+              Organizar Tarefas:{" "}
             </span>
             Permitir o cadastro de tarefas, facilitando a visualização e
             organização das atividades.{" "}
@@ -21,14 +22,14 @@ export default function AboutUs() {
           <p className="mb-2">
             <span className="text-[#FAB600] font-semibold">
               {" "}
-              · Acompanhar Progresso:
+              Acompanhar Progresso:
             </span>{" "}
             Permite visualizar o progresso das tarefas realizadas e pendentes,
             para que os usuários possam avaliar seu desempenho e produtividade.
           </p>
           <p className="mb-2">
             <span className="text-[#FAB600] font-semibold">
-              · Facilitar a Edição e Exclusão:
+              Facilitar a Edição e Exclusão:
             </span>{" "}
             Permitir a edição e exclusão de tarefas, bem como a adição de novas
             informações conforme necessário, oferecendo flexibilidade na gestão

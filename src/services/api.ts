@@ -26,7 +26,9 @@ class ApiServiceClass {
   async getAllTicket() {}
 
   async getAllTicketsFromKanban(kanbanId: string): Promise<TicketInterface[]> {
-    const { data } = await this.Api.get(`/tickets/getTicketsByDashboard/${kanbanId}`);
+    const { data } = await this.Api.get(
+      `/tickets/getTicketsByDashboard/${kanbanId}`
+    );
     return data;
   }
   async createKanban(name: string) {
@@ -39,12 +41,15 @@ class ApiServiceClass {
   }
 
   async getOneTicket(ticketId: string): Promise<TicketInterface> {
-    return {} as TicketInterface;
+    const { data } = await this.Api.get(`/tickets/getTicketById/${ticketId}`);
+    return data;
   }
 
   async getAllKanbans() {
     const userId = localStorage.getItem("userId");
-    const { data } = await this.Api.get(`/dashboards/getDashboardByUserId/${userId}`);
+    const { data } = await this.Api.get(
+      `/dashboards/getDashboardByUserId/${userId}`
+    );
     return data;
   }
 

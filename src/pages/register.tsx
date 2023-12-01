@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import TeamHubLogo from "../assets/teamhub-logo";
+import TeamHub from "../assets/teamhub";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -7,8 +8,9 @@ export default function Register() {
   return (
     <div className="w-screen h-screen bg-[#1D1E20] flex items-center">
       <div className="flex flex-col items-center w-full">
-        <div className="my-6">
+        <div className="my-6 flex flex-col items-center">
           <TeamHubLogo width={200} height={200} />
+          <TeamHub width={100} height={30} />
         </div>
         <input
           type="text"
