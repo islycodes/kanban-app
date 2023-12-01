@@ -9,8 +9,8 @@ interface ColumnProps {
 
 export const Column: React.FC<ColumnProps> = ({ header, tickets }) => {
   return (
-    <div>
-      <div>{header}</div>
+    <div className="h-full flex flex-col items-center">
+      <div className="text-2xl font-bold">{header}</div>
       {tickets.map((ticket, index) => (
         <div>{ticket.name}</div>
       ))}
