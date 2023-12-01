@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import TeamHubLogo from "../assets/teamhub-logo";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   return (
     <div className="w-screen h-screen bg-[#1D1E20] flex items-center">
       <div className="flex flex-col items-center w-full">
@@ -10,7 +13,7 @@ export default function Register() {
         <input
           type="text"
           id="username"
-          placeholder="Seu nome"
+          placeholder="Username"
           className="rounded-md bg-[#232527] h-[40px] mt-2 w-[400px] text-[#A9A9A9] py-2 px-4 placeholder-[#4A4D50]"
         />
         <input
@@ -28,7 +31,10 @@ export default function Register() {
         <div className="flex w-[400px] justify-end">
           <div className="text-[#A9A9A9] text-sm mt-4 mr-1">
             Já possui conta?{" "}
-            <span className="text-[#FAB600] font-semibold cursor-pointer">
+            <span
+              onClick={() => navigate("/login")}
+              className="text-[#FAB600] font-semibold cursor-pointer"
+            >
               Login
             </span>
           </div>

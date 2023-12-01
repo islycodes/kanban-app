@@ -4,7 +4,6 @@ import Reports from "./pages/reports";
 import Import from "./pages/import";
 import Export from "./pages/export";
 import AboutUs from "./pages/about-us";
-import Settings from "./pages/settings";
 import { Kanban } from "./pages/kanban";
 import SideBar from "./components/sidebar";
 import Login from "./pages/login";
@@ -30,7 +29,6 @@ export const App = () => {
         <Route path={`/importar`} element={<Import />} />
         <Route path={`/exportar`} element={<Export />} />
         <Route path={`/sobre`} element={<AboutUs />} />
-        <Route path={`/configuracoes`} element={<Settings />} />
         <Route path={`/login`} element={<Login />} />
         <Route path={`/cadastro`} element={<Register />} />
       </Routes>

@@ -14,11 +14,17 @@ import TeamHubLogo from "../assets/teamhub-logo";
 import ArrowUpIcon from "../assets/arrow-up";
 import { useLocation, useNavigate } from "react-router-dom";
 import MarkerIcon from "../assets/marker";
+import { toast } from "react-toastify";
 
 export default function SideBar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const notAdded = () => {
+    toast.error("Funcionalidade não adicionada", { icon: "😢", theme: "dark" });
+  };
+
   const generateMarker = (targetPath: string) => {
     return targetPath === location.pathname && <MarkerIcon color="#FAB600" />;
   };
@@ -131,7 +137,7 @@ export default function SideBar() {
                 {generateMarker("/sobre")}
               </div>
               <div
-                onClick={() => navigate("/configuracoes")}
+                onClick={() => notAdded()}
                 className="flex mt-4 cursor-pointer flex-row justify-between items-center"
               >
                 <div className="flex flex-row">
@@ -140,7 +146,6 @@ export default function SideBar() {
                     Configurações
                   </p>
                 </div>
-                {generateMarker("/configuracoes")}
               </div>
               <div className="flex mt-4 cursor-pointer items-center">
                 <LogoutIcon width={24} height={24} />
