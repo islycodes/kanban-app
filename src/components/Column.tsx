@@ -16,8 +16,8 @@ export const Column: React.FC<ColumnProps> = ({ header, tickets }) => {
   };
   return (
     <div className="mt-4 h-full w-full flex flex-col select-none">
-      <div className="text-base font-semibold my-4 flex flex-row">
-        <div className="mt-2 mr-2">
+      <div className="text-lg font-semibold my-4 flex flex-row">
+        <div className="mt-3 mr-2">
           <MarkerIcon color={header.color} />
         </div>
         <p>{header.label}</p>
@@ -25,7 +25,7 @@ export const Column: React.FC<ColumnProps> = ({ header, tickets }) => {
       {tickets.map((ticket, index) => {
         return (
           ticket.status === header.value && (
-            <div onClick={() => handleClick(ticket)}>
+            <div className="mb-4" onClick={() => handleClick(ticket)}>
               <Ticket key={index} ticket={ticket} />
             </div>
           )

@@ -9,6 +9,7 @@ import SideBar from "./components/sidebar";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Tasks from "./pages/tickets";
+import Homepage from "./pages/homepage";
 
 const RedirectToKanban: React.FC = () => {
   window.location.href = "/quadro";
@@ -23,7 +24,7 @@ export const App = () => {
         <Route>
           <Route path="/*" element={<RedirectToKanban />} />
         </Route>
-
+        <Route path={`/inicio`} element={<Homepage />} />
         <Route path={`/quadro`} element={<Kanban />} />
         <Route path={`/backlog`} element={<Backlog />} />
         <Route path={`/relatorios`} element={<Reports />} />

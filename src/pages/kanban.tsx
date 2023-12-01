@@ -67,10 +67,10 @@ export function Kanban() {
       <div className="flex flex-row justify-between items-end">
         <Header />
         <button
-          className="border rounded-md text-white p-2 h-min"
+          className="font-semibold rounded-md text-[#232527] p-2 bg-[#FAB600]"
           onClick={() => navigate("/tarefa")}
         >
-          Adicionar Ticket
+          Adicionar Tarefa
         </button>
       </div>
       <div className="my-10 border-t-[1px] border-[#3F3F3F] w-full"></div>
