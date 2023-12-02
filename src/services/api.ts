@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TicketInterface } from "../interfaces";
+import { DashboardInterface, TicketInterface } from "../interfaces";
 import { TicketStatusEnum } from "@/enums";
 
 class ApiServiceClass {
@@ -56,6 +56,49 @@ class ApiServiceClass {
     await this.Api.put(`/tickets/changeStatus/${ticketId}`, {
       status,
     });
+  }
+
+  async addTicketToKanban(
+    dashboardId: string,
+    ticket: Partial<TicketInterface>
+  ) {
+    await this.Api.post(`/tickets/create`, {
+      name: ticket.name,
+      description: ticket.description,
+      status: ticket.status,
+      dashboard_id: dashboardId,
+    });
+  }
+
+  async addDashboardFunction(dashboard: DashboardInterface) {
+    try {
+      console.log(dashboard);
+      const response = await this.Api.post("/dashboards/create", dashboard);
+
+      if (response.status < 200 || response.status >= 300) {
+        throw new Error("HTTP error " + response.status);
+      }
+
+      return response.data;
+    } catch (error) {
+      alert("Failed to post dashboard: " + error);
+      return;
+    }
+  }
+
+  async addTicketsFunction(ticket: TicketInterface): Promise<boolean> {
+    try {
+      const response = await this.Api.post("/tickets/create", ticket);
+
+      if (response.status !== 200) {
+        throw new Error("HTTP error " + response.status);
+      }
+
+      return true;
+    } catch (error) {
+      alert("Failed to post tickets: " + error);
+      return false;
+    }
   }
 }
 export const ApiInstance = new ApiServiceClass();

@@ -258,17 +258,17 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-typescript" "^7.23.3"
 
-"@babel/runtime@^7.12.1", "@babel/runtime@^7.9.2":
-  version "7.23.4"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.4.tgz#36fa1d2b36db873d25ec631dcc4923fdc1cf2e2e"
-  integrity sha512-2Yv65nlWnWlSpe3fXEyX5i7fx5kIKo4Qbcj+hMO0odwaneFjfXw5fdum+4yL20O0QiaHpia0cYQ9xpNMqrBwHg==
-  dependencies:
-    regenerator-runtime "^0.14.0"
-
-"@babel/runtime@^7.13.10", "@babel/runtime@^7.15.4", "@babel/runtime@^7.23.1":
+"@babel/runtime@^7.12.1", "@babel/runtime@^7.13.10", "@babel/runtime@^7.15.4", "@babel/runtime@^7.23.1":
   version "7.23.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.5.tgz#11edb98f8aeec529b82b211028177679144242db"
   integrity sha512-NdUTHcPe4C99WxPub+K9l9tK5/lV4UXIoaHSYgzco9BCyjKAAwzdBI+wWtYqHt7LJdbo74ZjRPJgzVweq1sz0w==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
+"@babel/runtime@^7.9.2":
+  version "7.23.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.4.tgz#36fa1d2b36db873d25ec631dcc4923fdc1cf2e2e"
+  integrity sha512-2Yv65nlWnWlSpe3fXEyX5i7fx5kIKo4Qbcj+hMO0odwaneFjfXw5fdum+4yL20O0QiaHpia0cYQ9xpNMqrBwHg==
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -892,6 +892,11 @@
   integrity sha512-mSM/iKUk5fDDrEV/e83qY+Cr3I1+Q3qqTuEn++HAWYjEa1+NxZr6CNrcJGf2ZTnq4HoFGC3zaTPZTobCzCFukA==
   dependencies:
     "@babel/types" "^7.20.7"
+
+"@types/file-saver@^2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@types/file-saver/-/file-saver-2.0.7.tgz#8dbb2f24bdc7486c54aa854eb414940bbd056f7d"
+  integrity sha512-dNKVfHd/jk0SkR/exKGj2ggkB45MAkzvWCaqLUUgkyjITkGNzH8H+yUwr+BLJUBjZOe9w8X3wgmXhZDRg1ED6A==
 
 "@types/history@^4.7.11":
   version "4.7.11"
@@ -1783,6 +1788,11 @@ file-entry-cache@^6.0.1:
   integrity sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==
   dependencies:
     flat-cache "^3.0.4"
+
+file-saver@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.5.tgz#d61cfe2ce059f414d899e9dd6d4107ee25670c38"
+  integrity sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==
 
 fill-range@^7.0.1:
   version "7.0.1"

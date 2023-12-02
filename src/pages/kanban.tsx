@@ -68,7 +68,9 @@ export function Kanban() {
         <Header />
         <button
           className="font-semibold rounded-md text-[#232527] p-2 bg-[#FAB600]"
-          onClick={() => navigate("/tarefa")}
+          onClick={() => {
+            selectedKanban && navigate(`/tarefa?quadro=${selectedKanban?.id}`);
+          }}
         >
           Adicionar Tarefa
         </button>

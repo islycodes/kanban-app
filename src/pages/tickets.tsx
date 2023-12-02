@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { TicketInterface } from "../interfaces";
 import { ApiInstance } from "../services/api";
 import Header from "../components/header";
@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import MarkerIcon from "@/assets/marker";
 import { TicketStatusEnum } from "@/enums";
 export default function Tasks() {
+  const navigate = useNavigate();
   const [params] = useSearchParams();
   const [ticket, setTicket] = useState<TicketInterface>();
 
@@ -39,6 +40,18 @@ export default function Tasks() {
   const handleStatusChange = async (status: TicketStatusEnum) => {
     setStatus(status);
     ticket && (await ApiInstance.updateTicketStatus(ticket?.id, status));
+  };
+
+  const handleSubmit = async () => {
+    if (!editMode) {
+      const kanbanId = params.get("quadro");
+      if (kanbanId === null) return;
+      await ApiInstance.addTicketToKanban(kanbanId, {
+        name,
+        description,
+        status: status as TicketStatusEnum,
+      });
+    }
   };
 
   return (
@@ -108,6 +121,12 @@ export default function Tasks() {
               </Select>
             </div>
           </div>
+          <button
+            className="font-semibold rounded-md mt-5 text-[#232527] p-2 w-min bg-[#FAB600]"
+            onClick={handleSubmit}
+          >
+            {editMode ? "Finalizar" : "Adicionar"}
+          </button>
         </div>
       </div>
     </div>
