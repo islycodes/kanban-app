@@ -1,3 +1,4 @@
+import AddIcon from "@/assets/add-icon";
 import ArrowDownIcon from "@/assets/arrow-down";
 import ArrowUpIcon from "@/assets/arrow-up";
 import Header from "@/components/header";
@@ -29,9 +30,24 @@ export default function Homepage() {
           </div>
         </div>
         <div className="flex flex-row mt-10">
-          <div className="bg-[#EC9CB9] w-[260px]">Não iniciado</div>
-          <div className="bg-[#5B97BD] w-[260px] mx-10">Em andamento</div>
-          <div className="bg-[#6C9B7D] w-[260px]">Conclusão</div>
+          <div className="bg-[#EC9CB9] w-[260px] font-semibold p-2 px-4 rounded-md flex justify-between">
+            Não iniciado - 130
+            <div className="cursor-pointer">
+              <AddIcon width={24} height={24} />
+            </div>
+          </div>
+          <div className="bg-[#5B97BD] w-[260px] mx-10 font-semibold p-2 px-4 rounded-md flex justify-between">
+            Em andamento{" "}
+            <div className="cursor-pointer">
+              <AddIcon width={24} height={24} />
+            </div>
+          </div>
+          <div className="bg-[#6C9B7D] w-[260px] font-semibold p-2 px-4 rounded-md flex justify-between">
+            Concluído{" "}
+            <div className="cursor-pointer">
+              <AddIcon width={24} height={24} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

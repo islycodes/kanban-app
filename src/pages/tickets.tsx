@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import MarkerIcon from "@/assets/marker";
 import { TicketStatusEnum } from "@/enums";
 import { toast } from "react-toastify";
+import { Checkbox } from "@/components/ui/checkbox";
 export default function Tasks() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -52,7 +53,7 @@ export default function Tasks() {
         description,
         status: status as TicketStatusEnum,
       });
-      toast.success("Ticket adicionado!");
+      toast.success("Ticket adicionado!", { theme: "dark" });
     }
     navigate(-1);
   };
@@ -89,7 +90,7 @@ export default function Tasks() {
           </div>
           <div className="mt-6 flex flex-row">
             <label className="text-[#A9A9A9] mr-2 mt-3">Status: </label>
-            <div className="ml-8 mt-2">
+            <div className="ml-8 mt-2 flex w-full">
               <Select
                 value={status as TicketStatusEnum}
                 onValueChange={handleStatusChange}
@@ -124,13 +125,22 @@ export default function Tasks() {
                   </SelectItem>
                 </SelectContent>
               </Select>
+              <div className="ml-[122px] flex items-center">
+                <Checkbox className="" id="priority" />
+                <label
+                  htmlFor="priority"
+                  className="text-sm font-medium text-[#A9A9A9] ml-2"
+                >
+                  Prioridade
+                </label>
+              </div>
             </div>
           </div>
           <button
-            className="font-semibold rounded-md mt-5 text-[#232527] p-2 w-min bg-[#FAB600]"
+            className="font-semibold rounded-md mt-8 text-[#232527] p-1 px-4 w-min bg-[#FAB600]"
             onClick={handleSubmit}
           >
-            {editMode ? "Finalizar" : "Adicionar"}
+            {editMode ? "Salvar" : "Adicionar"}
           </button>
         </div>
       </div>
