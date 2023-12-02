@@ -1,12 +1,71 @@
-import AddIcon from "@/assets/add-icon";
 import ArrowDownIcon from "@/assets/arrow-down";
 import ArrowUpIcon from "@/assets/arrow-up";
 import Header from "@/components/header";
-import { useState } from "react";
+import { Ticket } from "@/components/ticket";
+import { TicketStatusEnum } from "@/enums";
+import { TicketInterface } from "@/interfaces";
+import { ApiInstance } from "@/services/api";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+interface AllTicketsByStatus {
+  status: TicketStatusEnum;
+  tickets: TicketInterface[];
+}
 
 export default function Homepage() {
   const [open, setOpen] = useState(false);
+  const [allTickets, setAllTickets] = useState<AllTicketsByStatus[]>();
+  const [allPriorityTickets, setAllPriorityTickets] = useState<TicketInterface[]>();
+  const navigate = useNavigate();
 
+  const fetchAndFilterAllTickets = async () => {
+    const kanbans = await ApiInstance.getAllKanbans();
+    const tickets: AllTicketsByStatus[] = [
+      {
+        status: TicketStatusEnum.TODO,
+        tickets: [],
+      },
+      {
+        status: TicketStatusEnum.TODO,
+        tickets: [],
+      },
+      {
+        status: TicketStatusEnum.TODO,
+        tickets: [],
+      },
+    ];
+    const priorityTickets: TicketInterface[] = [];
+    kanbans.forEach((kanban) => {
+      kanban.tickets.forEach((ticket) => {
+        if (ticket.priority) {
+          priorityTickets.push(ticket);
+          return;
+        }
+        switch (ticket.status) {
+          case TicketStatusEnum.TODO:
+            tickets[0].tickets.push(ticket);
+            break;
+          case TicketStatusEnum.DOING:
+            tickets[1].tickets.push(ticket);
+            break;
+          case TicketStatusEnum.DONE:
+            tickets[2].tickets.push(ticket);
+            break;
+        }
+      });
+    });
+    setAllTickets(tickets);
+    setAllPriorityTickets(priorityTickets);
+  };
+
+  const handleClick = (ticket: TicketInterface) => {
+    navigate(`/tarefa?id=${ticket.id}`);
+  };
+
+  useEffect(() => {
+    fetchAndFilterAllTickets();
+  }, []);
   return (
     <div className="h-full w-full bg-[#1D1E20]">
       <div className="p-20">
@@ -14,39 +73,63 @@ export default function Homepage() {
         <div className="my-10 border-t-[1px] border-[#3F3F3F] w-full"></div>
         <div className="flex justify-between">
           <p className="text-[#A9A9A9] font-semibold text-xl">Dashboard</p>
-          <div className="flex flex-col">
-            <div
-              onClick={() => setOpen(!open)}
-              className="text-[#FAB600] text-lg flex items-center"
-            >
-              <p className="mr-2">Tarefas Prioritárias</p>
-              {open ? (
-                <ArrowUpIcon width={12} height={8} />
-              ) : (
-                <ArrowDownIcon width={12} height={8} />
-              )}
-            </div>
-            {open && <div>dfgdfg</div>}
-          </div>
         </div>
-        <div className="flex flex-row mt-10">
-          <div className="bg-[#EC9CB9] w-[260px] font-semibold p-2 px-4 rounded-md flex justify-between">
-            Não iniciado - 130
-            <div className="cursor-pointer">
-              <AddIcon width={24} height={24} />
+        <div className="flex flex-row mt-10 justify-between">
+          <div className="flex flex-row">
+            <div>
+              <div className="bg-[#EC9CB9] w-[260px] font-semibold p-2 px-4 rounded-md flex justify-between">
+                Não iniciado - {allTickets && allTickets[0]?.tickets.length}
+              </div>
+              {allTickets &&
+                allTickets[0]?.tickets?.map((ticket, index) => {
+                  return (
+                    <div onClick={() => handleClick(ticket)} className="mt-4 text-[#A9A9A9]">
+                      <Ticket key={index} ticket={ticket} />
+                    </div>
+                  );
+                })}
+            </div>
+            <div className="mx-10">
+              <div className="bg-[#5B97BD] w-[260px] font-semibold p-2 px-4 rounded-md flex justify-between">
+                Em andamento - {allTickets && allTickets[1]?.tickets.length}
+              </div>
+              {allTickets &&
+                allTickets[1]?.tickets?.map((ticket, index) => {
+                  return (
+                    <div onClick={() => handleClick(ticket)} className="mt-4 text-[#A9A9A9]">
+                      <Ticket key={index} ticket={ticket} />
+                    </div>
+                  );
+                })}
+            </div>
+            <div>
+              <div className="bg-[#6C9B7D] w-[260px] font-semibold p-2 px-4 rounded-md flex justify-between">
+                Concluído - {allTickets && allTickets[2]?.tickets.length}
+              </div>
+              {allTickets &&
+                allTickets[2]?.tickets?.map((ticket, index) => {
+                  return (
+                    <div onClick={() => handleClick(ticket)} className="mt-4 text-[#A9A9A9]">
+                      <Ticket key={index} ticket={ticket} />
+                    </div>
+                  );
+                })}
             </div>
           </div>
-          <div className="bg-[#5B97BD] w-[260px] mx-10 font-semibold p-2 px-4 rounded-md flex justify-between">
-            Em andamento{" "}
-            <div className="cursor-pointer">
-              <AddIcon width={24} height={24} />
+
+          <div className="flex flex-col w-[260px]">
+            <div onClick={() => setOpen(!open)} className="text-[#FAB600] text-lg flex items-center cursor-pointer">
+              <p className="mr-2">Tarefas Prioritárias</p>
+              {open ? <ArrowUpIcon width={12} height={8} /> : <ArrowDownIcon width={12} height={8} />}
             </div>
-          </div>
-          <div className="bg-[#6C9B7D] w-[260px] font-semibold p-2 px-4 rounded-md flex justify-between">
-            Concluído{" "}
-            <div className="cursor-pointer">
-              <AddIcon width={24} height={24} />
-            </div>
+            {open &&
+              allPriorityTickets?.map((ticket, index) => {
+                return (
+                  <div className="mt-4 text-[#A9A9A9]">
+                    <Ticket key={index} ticket={ticket} />
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
