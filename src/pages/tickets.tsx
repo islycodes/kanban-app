@@ -13,6 +13,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import MarkerIcon from "@/assets/marker";
 import { TicketStatusEnum } from "@/enums";
+import { toast } from "react-toastify";
 export default function Tasks() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -51,7 +52,9 @@ export default function Tasks() {
         description,
         status: status as TicketStatusEnum,
       });
+      toast.success("Ticket adicionado!");
     }
+    navigate(-1);
   };
 
   return (
@@ -70,7 +73,9 @@ export default function Tasks() {
               type="text"
               onChange={(e) => setName(e.target.value)}
               disabled={editMode}
-              className="rounded-md bg-[#232527] h-[40px] mt-2 w-[400px] text-[#A9A9A9] py-2 px-4 ml-[27px] cursor-not-allowed"
+              className={`rounded-md bg-[#232527] h-[40px] mt-2 w-[400px] text-[#A9A9A9] py-2 px-4 ml-[27px] ${
+                editMode && "cursor-not-allowed"
+              }`}
             />
           </div>
           <div className="mt-4 flex flex-row">
