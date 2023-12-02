@@ -1,7 +1,6 @@
 import React from "react";
 import { Ticket } from "./ticket";
 import { TicketInterface } from "../interfaces";
-import { useNavigate } from "react-router-dom";
 import MarkerIcon from "@/assets/marker";
 
 interface ColumnProps {
@@ -10,10 +9,6 @@ interface ColumnProps {
 }
 
 export const Column: React.FC<ColumnProps> = ({ header, tickets }) => {
-  const navigate = useNavigate();
-  const handleClick = (ticket: TicketInterface) => {
-    navigate(`/tarefa?id=${ticket.id}`);
-  };
   return (
     <div className="mt-4 h-full w-full flex flex-col select-none">
       <div className="text-lg font-semibold my-4 flex flex-row">
@@ -25,7 +20,7 @@ export const Column: React.FC<ColumnProps> = ({ header, tickets }) => {
       {tickets.map((ticket, index) => {
         return (
           ticket.status === header.value && (
-            <div className="mb-4" onClick={() => handleClick(ticket)}>
+            <div className="mb-4">
               <Ticket key={index} ticket={ticket} />
             </div>
           )

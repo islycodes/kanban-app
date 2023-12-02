@@ -22,7 +22,10 @@ export default function SideBar() {
   const navigate = useNavigate();
 
   const notAdded = () => {
-    toast.error("Funcionalidade não adicionada", { icon: "😢", theme: "dark" });
+    toast.error("Oops! funcionalidade ainda não implementada.", {
+      icon: "😢",
+      theme: "dark",
+    });
   };
 
   const generateMarker = (targetPath: string) => {
@@ -72,14 +75,13 @@ export default function SideBar() {
                 {generateMarker("/backlog")}
               </div>
               <div
-                onClick={() => navigate("/relatorios")}
+                onClick={() => notAdded()}
                 className="flex mt-4 ml-2 cursor-pointer flex-row justify-between items-center"
               >
                 <div className="flex flex-row">
                   <ReportsIcon width={24} height={24} />
                   <p className="ml-4 text-[#A9A9A9] font-medium">Relatórios</p>
                 </div>
-                {generateMarker("/relatorios")}
               </div>
             </div>
             <div className="mt-10 ml-3">
@@ -147,7 +149,13 @@ export default function SideBar() {
                   </p>
                 </div>
               </div>
-              <div className="flex mt-4 cursor-pointer items-center">
+              <div
+                className="flex mt-4 cursor-pointer items-center"
+                onClick={() => {
+                  localStorage.clear();
+                  navigate("/login");
+                }}
+              >
                 <LogoutIcon width={24} height={24} />
                 <p className="ml-4 text-[#A9A9A9] font-medium">Sair</p>
               </div>

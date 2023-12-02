@@ -6,7 +6,6 @@ import { TicketStatusEnum } from "@/enums";
 import { TicketInterface } from "@/interfaces";
 import { ApiInstance } from "@/services/api";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface AllTicketsByStatus {
   status: TicketStatusEnum;
@@ -16,8 +15,8 @@ interface AllTicketsByStatus {
 export default function Homepage() {
   const [open, setOpen] = useState(false);
   const [allTickets, setAllTickets] = useState<AllTicketsByStatus[]>();
-  const [allPriorityTickets, setAllPriorityTickets] = useState<TicketInterface[]>();
-  const navigate = useNavigate();
+  const [allPriorityTickets, setAllPriorityTickets] =
+    useState<TicketInterface[]>();
 
   const fetchAndFilterAllTickets = async () => {
     const kanbans = await ApiInstance.getAllKanbans();
@@ -38,9 +37,8 @@ export default function Homepage() {
     const priorityTickets: TicketInterface[] = [];
     kanbans.forEach((kanban) => {
       kanban.tickets.forEach((ticket) => {
-        if (ticket.priority) {
+        if (ticket.priority && ticket.status !== TicketStatusEnum.DONE) {
           priorityTickets.push(ticket);
-          return;
         }
         switch (ticket.status) {
           case TicketStatusEnum.TODO:
@@ -57,10 +55,6 @@ export default function Homepage() {
     });
     setAllTickets(tickets);
     setAllPriorityTickets(priorityTickets);
-  };
-
-  const handleClick = (ticket: TicketInterface) => {
-    navigate(`/tarefa?id=${ticket.id}`);
   };
 
   useEffect(() => {
@@ -83,7 +77,7 @@ export default function Homepage() {
               {allTickets &&
                 allTickets[0]?.tickets?.map((ticket, index) => {
                   return (
-                    <div onClick={() => handleClick(ticket)} className="mt-4 text-[#A9A9A9]">
+                    <div className="mt-4 text-[#A9A9A9]">
                       <Ticket key={index} ticket={ticket} />
                     </div>
                   );
@@ -96,7 +90,7 @@ export default function Homepage() {
               {allTickets &&
                 allTickets[1]?.tickets?.map((ticket, index) => {
                   return (
-                    <div onClick={() => handleClick(ticket)} className="mt-4 text-[#A9A9A9]">
+                    <div className="mt-4 text-[#A9A9A9]">
                       <Ticket key={index} ticket={ticket} />
                     </div>
                   );
@@ -109,7 +103,7 @@ export default function Homepage() {
               {allTickets &&
                 allTickets[2]?.tickets?.map((ticket, index) => {
                   return (
-                    <div onClick={() => handleClick(ticket)} className="mt-4 text-[#A9A9A9]">
+                    <div className="mt-4 text-[#A9A9A9]">
                       <Ticket key={index} ticket={ticket} />
                     </div>
                   );
@@ -118,9 +112,16 @@ export default function Homepage() {
           </div>
 
           <div className="flex flex-col w-[260px]">
-            <div onClick={() => setOpen(!open)} className="text-[#FAB600] text-lg flex items-center cursor-pointer">
+            <div
+              onClick={() => setOpen(!open)}
+              className="text-[#FAB600] text-lg flex items-center cursor-pointer"
+            >
               <p className="mr-2">Tarefas Prioritárias</p>
-              {open ? <ArrowUpIcon width={12} height={8} /> : <ArrowDownIcon width={12} height={8} />}
+              {open ? (
+                <ArrowUpIcon width={12} height={8} />
+              ) : (
+                <ArrowDownIcon width={12} height={8} />
+              )}
             </div>
             {open &&
               allPriorityTickets?.map((ticket, index) => {

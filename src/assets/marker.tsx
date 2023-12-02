@@ -1,12 +1,13 @@
 export default function MarkerIcon(props: {
   color: string;
   classname?: string;
+  width?: string;
 }) {
   return (
     <div className={props.classname}>
       <svg
-        width="8"
-        height="8"
+        width={props.width ? props.width : "8"}
+        height={props.width ? props.width : "8"}
         viewBox="0 0 6 6"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

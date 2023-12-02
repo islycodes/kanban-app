@@ -4,7 +4,7 @@ import { TicketStatusEnum } from "@/enums";
 
 class ApiServiceClass {
   Api = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "http://192.168.3.105:5000",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -21,13 +21,25 @@ class ApiServiceClass {
       localStorage.setItem("username", data.user.username);
     } catch (error) {
       console.log(error);
+      throw new Error("Failed to login");
     }
   }
 
+  async register(username: string, email: string, password: string) {
+    return await this.Api.post("/users/create", {
+      username,
+      email,
+      password,
+    });
+  }
+
   async getAllTicketsFromKanban(kanbanId: string): Promise<TicketInterface[]> {
-    const { data } = await this.Api.get(`/tickets/getTicketsByDashboard/${kanbanId}`);
+    const { data } = await this.Api.get(
+      `/tickets/getTicketsByDashboard/${kanbanId}`
+    );
     return data;
   }
+
   async createKanban(name: string) {
     const userId = localStorage.getItem("userId");
     const { data } = await this.Api.post("/dashboards/create", {
@@ -44,7 +56,9 @@ class ApiServiceClass {
 
   async getAllKanbans(): Promise<DashboardInterface[]> {
     const userId = localStorage.getItem("userId");
-    const { data } = await this.Api.get(`/dashboards/getDashboardByUserId/${userId}`);
+    const { data } = await this.Api.get(
+      `/dashboards/getDashboardByUserId/${userId}`
+    );
     return data;
   }
 
@@ -54,7 +68,23 @@ class ApiServiceClass {
     });
   }
 
-  async addTicketToKanban(dashboardId: string, ticket: Partial<TicketInterface>) {
+  async updateTicketData(
+    ticketId: string,
+    name: string,
+    description: string,
+    priority: string
+  ) {
+    await this.Api.put(`/tickets/changeData/${ticketId}`, {
+      name,
+      description,
+      priority,
+    });
+  }
+
+  async addTicketToKanban(
+    dashboardId: string,
+    ticket: Partial<TicketInterface>
+  ) {
     await this.Api.post(`/tickets/create`, {
       name: ticket.name,
       description: ticket.description,

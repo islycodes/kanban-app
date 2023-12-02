@@ -12,7 +12,7 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       await ApiInstance.login(username, password);
-      navigate("/quadro");
+      navigate("/inicio");
     } catch (error) {
       setError("Credenciais inválidas");
     }

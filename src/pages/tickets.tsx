@@ -3,7 +3,13 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { TicketInterface } from "../interfaces";
 import { ApiInstance } from "../services/api";
 import Header from "../components/header";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import MarkerIcon from "@/assets/marker";
 import { TicketStatusEnum } from "@/enums";
@@ -61,7 +67,9 @@ export default function Tasks() {
         <Header />
         <div className="my-10 border-t-[1px] border-[#3F3F3F] w-full"></div>
         <div className="flex flex-col">
-          <p className="mb-4 text-lg text-[#FAB600] font-medium">{editMode ? "Visualizando tarefa" : "Adicionando nova tarefa"}</p>
+          <p className="mb-4 text-lg text-[#FAB600] font-medium">
+            {editMode ? "Visualizando tarefa" : "Adicionando nova tarefa"}
+          </p>
           <div>
             <label className="text-[#A9A9A9] mr-2">Título: </label>
             <input
@@ -69,7 +77,9 @@ export default function Tasks() {
               type="text"
               onChange={(e) => setName(e.target.value)}
               disabled={editMode}
-              className={`rounded-md bg-[#232527] h-[40px] mt-2 w-[400px] text-[#A9A9A9] py-2 px-4 ml-[27px] ${editMode && "cursor-not-allowed"}`}
+              className={`rounded-md bg-[#232527] h-[40px] mt-2 w-[400px] text-[#A9A9A9] py-2 px-4 ml-[27px] ${
+                editMode && "cursor-not-allowed"
+              }`}
             />
           </div>
           <div className="mt-4 flex flex-row">
@@ -84,7 +94,10 @@ export default function Tasks() {
           <div className="mt-6 flex flex-row">
             <label className="text-[#A9A9A9] mr-2 mt-3">Status: </label>
             <div className="ml-8 mt-2 flex w-full">
-              <Select value={status as TicketStatusEnum} onValueChange={handleStatusChange}>
+              <Select
+                value={status as TicketStatusEnum}
+                onValueChange={handleStatusChange}
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
@@ -124,13 +137,19 @@ export default function Tasks() {
                     setPriority(!priority);
                   }}
                 />
-                <label htmlFor="priority" className="text-sm font-medium text-[#A9A9A9] ml-2">
+                <label
+                  htmlFor="priority"
+                  className="text-sm font-medium text-[#A9A9A9] ml-2"
+                >
                   Prioridade
                 </label>
               </div>
             </div>
           </div>
-          <button className="font-semibold rounded-md mt-8 text-[#232527] p-1 px-4 w-min bg-[#FAB600]" onClick={handleSubmit}>
+          <button
+            className="font-semibold rounded-md mt-8 text-[#232527] p-1 px-4 w-min bg-[#FAB600]"
+            onClick={handleSubmit}
+          >
             {editMode ? "Salvar" : "Adicionar"}
           </button>
         </div>
