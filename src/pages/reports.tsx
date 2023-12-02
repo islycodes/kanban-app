@@ -87,12 +87,19 @@ export default function Reports() {
         </div>
         <div className="text-[#A9A9A9] text-2xl">
           <p>Total: {total}</p>
-          {allTickets &&
-            allTickets.map((currentTicket, index) => (
-              <p key={index} className={`flex flex-row items-center`}>
-                <p className={`text-[${TicketStatus[index].color}] mr-1`}>{Math.round((currentTicket.tickets.length / total) * 100)}%</p> {TicketStatus[index].label}
+          {allTickets && (
+            <>
+              <p className={`flex flex-row items-center`}>
+                <p className={`text-[${TicketStatus[0].color}] mr-1`}>{Math.round((allTickets[0].tickets.length / total) * 100)}%</p> {TicketStatus[0].label}
               </p>
-            ))}
+              <p className={`flex flex-row items-center`}>
+                <p className={`text-[${TicketStatus[1].color}] mr-1`}>{Math.round((allTickets[1].tickets.length / total) * 100)}%</p> {TicketStatus[1].label}
+              </p>
+              <p className={`flex flex-row items-center`}>
+                <p className={`text-[${TicketStatus[2].color}] mr-1`}>{Math.round((allTickets[2].tickets.length / total) * 100)}%</p> {TicketStatus[2].label}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>
