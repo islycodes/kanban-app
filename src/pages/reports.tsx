@@ -90,13 +90,13 @@ export default function Reports() {
           {allTickets && (
             <>
               <p className={`flex flex-row items-center`}>
-                <p className={`text-[${TicketStatus[0].color}] mr-1`}>{Math.round((allTickets[0].tickets.length / total) * 100)}%</p> {TicketStatus[0].label}
+                <p className={`text-[#EC9CB9] mr-1`}>{Math.round((allTickets[0].tickets.length / total) * 100)}%</p> {TicketStatus[0].label}
               </p>
               <p className={`flex flex-row items-center`}>
-                <p className={`text-[${TicketStatus[1].color}] mr-1`}>{Math.round((allTickets[1].tickets.length / total) * 100)}%</p> {TicketStatus[1].label}
+                <p className={`text-[#5B97BD] mr-1`}>{Math.round((allTickets[1].tickets.length / total) * 100)}%</p> {TicketStatus[1].label}
               </p>
               <p className={`flex flex-row items-center`}>
-                <p className={`text-[${TicketStatus[2].color}] mr-1`}>{Math.round((allTickets[2].tickets.length / total) * 100)}%</p> {TicketStatus[2].label}
+                <p className={`text-[#6C9B7D] mr-1`}>{Math.round((allTickets[2].tickets.length / total) * 100)}%</p> {TicketStatus[2].label}
               </p>
             </>
           )}
