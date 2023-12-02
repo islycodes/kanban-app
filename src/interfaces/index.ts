@@ -6,6 +6,7 @@ export interface TicketInterface {
   description?: string;
   status: TicketStatusEnum;
   dashboard_id: number;
+  priority: boolean;
 }
 export interface DashboardInterface {
   id: string;

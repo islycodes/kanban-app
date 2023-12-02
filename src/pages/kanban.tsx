@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react";
 import { Column } from "../components/column";
 import Header from "../components/header";
-import { TicketStatus, TicketStatusEnum } from "../enums";
+import { TicketStatus } from "../enums";
 import { DashboardInterface, TicketInterface } from "../interfaces";
 import { ApiInstance } from "../services/api";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -26,9 +18,7 @@ export function Kanban() {
 
   const getAllTickets = async () => {
     if (selectedKanban) {
-      const data = await ApiInstance.getAllTicketsFromKanban(
-        selectedKanban?.id
-      );
+      const data = await ApiInstance.getAllTicketsFromKanban(selectedKanban?.id);
       setTickets(data);
     }
   };
@@ -47,7 +37,7 @@ export function Kanban() {
   const handleAddNewKanban = async () => {
     if (!newKanbanName) return;
     await ApiInstance.createKanban(newKanbanName);
-    toast.success("Novo quadro adicionado!");
+    toast.success("Novo quadro adicionado!", { theme: "dark" });
     setNewKanbanName("");
     getAllKanbans();
   };
@@ -77,12 +67,7 @@ export function Kanban() {
       </div>
       <div className="my-10 border-t-[1px] border-[#3F3F3F] w-full"></div>
       <div className="flex flex-row justify-between">
-        <Select
-          value={selectedKanban?.id}
-          onValueChange={(e) =>
-            setSelectedKanban(kanbans.find((kanban) => kanban.id === e))
-          }
-        >
+        <Select value={selectedKanban?.id} onValueChange={(e) => setSelectedKanban(kanbans.find((kanban) => kanban.id === e))}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder={"Selecione um quadro"} />
           </SelectTrigger>
@@ -103,10 +88,7 @@ export function Kanban() {
             placeholder="Nome do quadro"
             className="mx-3 rounded-md px-2 bg-[#3F3F3F] text-[#A9A9A9] placeholder-[#686868]"
           />
-          <button
-            className="font-semibold rounded-md text-[#232527] px-2 bg-[#FAB600]"
-            onClick={handleAddNewKanban}
-          >
+          <button className="font-semibold rounded-md text-[#232527] px-2 bg-[#FAB600]" onClick={handleAddNewKanban}>
             Adicionar
           </button>
         </div>

@@ -4,7 +4,7 @@ import { TicketStatusEnum } from "@/enums";
 
 class ApiServiceClass {
   Api = axios.create({
-    baseURL: "http://192.168.3.105:5000",
+    baseURL: "http://localhost:5000",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -25,9 +25,7 @@ class ApiServiceClass {
   }
 
   async getAllTicketsFromKanban(kanbanId: string): Promise<TicketInterface[]> {
-    const { data } = await this.Api.get(
-      `/tickets/getTicketsByDashboard/${kanbanId}`
-    );
+    const { data } = await this.Api.get(`/tickets/getTicketsByDashboard/${kanbanId}`);
     return data;
   }
   async createKanban(name: string) {
@@ -44,11 +42,9 @@ class ApiServiceClass {
     return data;
   }
 
-  async getAllKanbans() {
+  async getAllKanbans(): Promise<DashboardInterface[]> {
     const userId = localStorage.getItem("userId");
-    const { data } = await this.Api.get(
-      `/dashboards/getDashboardByUserId/${userId}`
-    );
+    const { data } = await this.Api.get(`/dashboards/getDashboardByUserId/${userId}`);
     return data;
   }
 
@@ -58,15 +54,13 @@ class ApiServiceClass {
     });
   }
 
-  async addTicketToKanban(
-    dashboardId: string,
-    ticket: Partial<TicketInterface>
-  ) {
+  async addTicketToKanban(dashboardId: string, ticket: Partial<TicketInterface>) {
     await this.Api.post(`/tickets/create`, {
       name: ticket.name,
       description: ticket.description,
       status: ticket.status,
       dashboard_id: dashboardId,
+      priority: ticket.priority,
     });
   }
 
